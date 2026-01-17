@@ -1,4 +1,4 @@
-// 🌱 Grow.ly — Task Logic (Frontend, backend-ready)
+0// 🌱 Grow.ly — Task Logic (Frontend, backend-ready)
 
 // ===== DASHBOARD ELEMENTS =====
 const taskList = document.getElementById("taskList");
@@ -11,7 +11,11 @@ const filterCategory = document.getElementById("filterCategory");
 const filterPriority = document.getElementById("filterPriority");
 const prevMonthBtn = document.getElementById("prevMonth");
 const nextMonthBtn = document.getElementById("nextMonth");
-const taskPriority = document.getElementById("taskPriority");
+const taskTitle = document.getElementById("taskTitle");
+const taskDate = document.getElementById("taskDate");
+const taskStartTime = document.getElementById("taskStartTime");
+const taskEndTime = document.getElementById("taskEndTime");
+const taskCategory = document.getElementById("taskCategory");
 
 const progressCircle = document.getElementById("progressCircle");
 const progressPercent = document.getElementById("progressPercent");
@@ -21,14 +25,8 @@ const plant = document.getElementById("plant");
 const calendarTaskList = document.getElementById("calendarTaskList");
 const calendarTasksTitle = document.getElementById("calendarTasksTitle");
 
-// ✅ FIX: missing form inputs
-const taskTitle = document.getElementById("taskTitle");
-const taskDate = document.getElementById("taskDate");
-const taskStartTime = document.getElementById("taskStartTime");
-const taskEndTime = document.getElementById("taskEndTime");
-const taskCategory = document.getElementById("taskCategory");
-
 let selectedDate = null;
+
 let tasks = [];
 
 // 💾 Local Storage Helpers
@@ -47,6 +45,7 @@ function loadTasks() {
 function today() {
   return new Date().toISOString().split("T")[0];
 }
+
 // ===============================
 // 🧠 DASHBOARD-ONLY LOGIC
 // ===============================
@@ -63,7 +62,7 @@ if (addTaskBtn && taskForm) {
   taskForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-   const task = {
+    const task = {
   id: Date.now(),
   title: taskTitle.value,
   date: taskDate.value || today(),
@@ -71,10 +70,8 @@ if (addTaskBtn && taskForm) {
     ? `${taskStartTime.value}-${taskEndTime.value}`
     : null,
   category: taskCategory.value,
-  priority: taskPriority.value, // ✅ ADD HERE
   completed: false
 };
-
 
 
     tasks.push(task);
@@ -132,7 +129,6 @@ function renderTasks() {
       <div class="task-meta">
         <span class="category">${task.category}</span>
         <span class="priority ${task.priority}"></span>
-
         <button class="delete-btn">
           <img src="bin.png" alt="delete" class="bin-icon" />
         </button>
@@ -173,8 +169,7 @@ function renderTasks() {
   if (progressCircle) updateProgress();
 }
 
-
-/// ===============================
+// ===============================
 // 🌱 Progress logic (today only)
 // ===============================
 function updateProgress() {
@@ -199,6 +194,7 @@ function updateProgress() {
   else if (percent < 100) plant.textContent = "🌼";
   else plant.textContent = "🌸";
 }
+
 // ===============================
 // 📅 Calendar Logic
 // ===============================
@@ -343,6 +339,7 @@ div.addEventListener("click", () => {
     calendarGrid.appendChild(div);
   }
 }
+
 // ===============================
 // 🧩 FULL-FEATURED CALENDAR TASK RENDERER (REPLACED)
 // ===============================
@@ -350,6 +347,7 @@ function renderCalendarTasks(dateObj) {
   if (!calendarTaskList || !calendarTasksTitle) return;
 
   const dateStr = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, "0")}-${String(dateObj.getDate()).padStart(2, "0")}`;
+
 
   const options = { month: "short", day: "numeric", year: "numeric" };
   calendarTasksTitle.textContent =
@@ -405,7 +403,6 @@ function renderCalendarTasks(dateObj) {
       saveTasks();
       renderCalendar();
       renderCalendarTasks(dateObj);
-      renderPlanner(); // keep planner in sync
     });
 
     const deleteBtn = card.querySelector(".delete-btn");
@@ -414,7 +411,6 @@ function renderCalendarTasks(dateObj) {
       saveTasks();
       renderCalendar();
       renderCalendarTasks(dateObj);
-      renderPlanner();
     });
 
     calendarTaskList.appendChild(card);
@@ -422,54 +418,83 @@ function renderCalendarTasks(dateObj) {
 }
 
 // ===============================
+// 🚀 INIT
+// ===============================
+loadTasks();
+renderTasks();
+renderCalendar();
+renderPlanner();
+
+
+// ===============================
+// 🕘 Planner — Dynamic Hour Grid
+// ===============================
+// ===============================
 // 🕘 Planner Helpers
 // ===============================
+
+// extract start hour from "10:00-11:30"
 function getStartHour(timeRange) {
   if (!timeRange) return null;
-  return Number(timeRange.split(":")[0]);
+  const start = timeRange.split("-")[0];
+  return Number(start.split(":")[0]);
 }
 
+// create task card for planner (ONLY planner)
 function createPlannerTask(task) {
   const card = document.createElement("div");
+
+  // ✅ FIX: planner CSS expects this
   card.className = "planner-task";
 
-  // 🎨 shade pools
-  const pinkShades = ["pink-1", "pink-2", "pink-3"];
-  const greenShades = ["green-1", "green-2", "green-3"];
+  if (task.completed) card.classList.add("completed");
 
-  if (task.category && task.category.toLowerCase().includes("personal")) {
-    card.classList.add(
-      pinkShades[Math.floor(Math.random() * pinkShades.length)]
-    );
-  } else {
-    card.classList.add(
-      greenShades[Math.floor(Math.random() * greenShades.length)]
-    );
-  }
+  card.innerHTML = `
+    <label class="custom-checkbox">
+      <input type="checkbox" class="task-checkbox" ${task.completed ? "checked" : ""}/>
+      <span class="checkmark"></span>
+    </label>
+    <span>${task.title}</span>
+  `;
 
-  if (task.completed) card.style.opacity = "0.6";
+  const checkbox = card.querySelector(".task-checkbox");
+  checkbox.addEventListener("change", () => {
+    task.completed = checkbox.checked;
+    saveTasks();
+    renderTasks();
+    renderCalendar();   // ✅ calendar stays
+    renderPlanner();    // ✅ planner refresh
+  });
 
-  card.textContent = task.title;
   return card;
 }
-
-
 
 function renderAnytimeTasks() {
   const anytimeList = document.getElementById("anytimeTaskList");
   if (!anytimeList) return;
 
   const dateObj = selectedDate || new Date();
-  const dateStr = dateObj.toISOString().split("T")[0];
+  const dateStr =
+    `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, "0")}-${String(dateObj.getDate()).padStart(2, "0")}`;
 
   anytimeList.innerHTML = "";
 
-  tasks
-    .filter(t => t.date === dateStr && !t.time)
-    .forEach(task => {
-      anytimeList.appendChild(createPlannerTask(task));
-    });
+  const anytimeTasks = tasks.filter(
+    t => t.date === dateStr && !t.time
+  );
+
+  if (anytimeTasks.length === 0) {
+    anytimeList.innerHTML =
+      `<p class="progress-text">No flexible tasks 🌱</p>`;
+    return;
+  }
+
+  anytimeTasks.forEach(task => {
+    const card = createPlannerTask(task);
+    anytimeList.appendChild(card);
+  });
 }
+
 
 const plannerTimeline = document.getElementById("plannerTimeline");
 
@@ -478,49 +503,99 @@ function renderPlannerGrid() {
 
   plannerTimeline.innerHTML = "";
 
-  for (let hour = 5; hour <= 24; hour++) {
+const startHour = 5;   
+const endHour = 24;     
+
+  for (let hour = startHour; hour <= endHour; hour++) {
     const row = document.createElement("div");
     row.className = "time-row";
 
     const label = document.createElement("span");
     label.className = "time-label";
-    label.textContent =
-      hour === 12 ? "12 PM" :
-      hour > 12 ? `${hour - 12} PM` :
-      `${hour} AM`;
+
+   let displayHour;
+
+if (hour === 0 || hour === 24) {
+  displayHour = "12 AM";
+} else if (hour === 12) {
+  displayHour = "12 PM";
+} else if (hour > 12) {
+  displayHour = `${hour - 12} PM`;
+} else {
+  displayHour = `${hour} AM`;
+}
+
+
+    label.textContent = displayHour;
 
     const slot = document.createElement("div");
     slot.className = "time-slot";
-    slot.dataset.hour = hour;
+    slot.dataset.hour = hour; // 🔑 important for task placement later
 
     row.appendChild(label);
     row.appendChild(slot);
     plannerTimeline.appendChild(row);
   }
 }
+renderPlannerGrid();
 
 function renderPlanner() {
-  renderPlannerGrid();
+  renderPlannerGrid(); // reset grid first
   renderAnytimeTasks();
 
-  const dateObj = selectedDate || new Date();
-  const dateStr = dateObj.toISOString().split("T")[0];
+  const dateToShow = selectedDate || new Date();
+  const dateStr =
+    `${dateToShow.getFullYear()}-${String(dateToShow.getMonth() + 1).padStart(2, "0")}-${String(dateToShow.getDate()).padStart(2, "0")}`;
 
-  tasks
-    .filter(t => t.date === dateStr && t.time)
-    .forEach(task => {
-      const hour = getStartHour(task.time);
-      const slot = document.querySelector(`.time-slot[data-hour="${hour}"]`);
-      if (slot) slot.appendChild(createPlannerTask(task));
-    });
+  const todaysTasks = tasks.filter(t => t.date === dateStr);
+
+  todaysTasks.forEach(task => {
+    if (!task.time) return; // skip no-time tasks for now
+
+    const hour = getStartHour(task.time);
+    if (hour === null) return;
+
+    const slot = document.querySelector(
+      `.time-slot[data-hour="${hour}"]`
+    );
+
+    if (!slot) return;
+
+    const card = createPlannerTask(task);
+    slot.appendChild(card);
+  });
 }
 
 
-// ===============================
-// 🚀 INIT (ONLY ONE — FINAL)
-// ===============================
-loadTasks();
-renderTasks();
-renderCalendar();
-renderPlanner();
-renderCalendarTasks(selectedDate || new Date());
+function renderPlannerTasks(dateObj) {
+  if (!plannerTimeline) return;
+
+  // clear old tasks
+  plannerTimeline.querySelectorAll(".planner-task").forEach(t => t.remove());
+
+  const dateStr =
+    `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, "0")}-${String(dateObj.getDate()).padStart(2, "0")}`;
+
+  const dayTasks = tasks.filter(t => t.date === dateStr);
+
+  dayTasks.forEach(task => {
+    const taskEl = document.createElement("div");
+    taskEl.className = "planner-task";
+    taskEl.textContent = task.title;
+
+    // ✅ timed task
+    if (task.time) {
+      const startHour = parseInt(task.time.split(":")[0], 10);
+      const slot = plannerTimeline.querySelector(
+        `.time-slot[data-hour="${startHour}"]`
+      );
+
+      if (slot) slot.appendChild(taskEl);
+    }
+    // 🟡 anytime task → first free slot
+    else {
+      const firstSlot = plannerTimeline.querySelector(".time-slot");
+      if (firstSlot) firstSlot.appendChild(taskEl);
+    }
+  });
+}

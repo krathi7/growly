@@ -101,6 +101,22 @@ body {
   color: #777;
 }
 
+
+
+/* =========================
+   🍓 STRAWBERRY (PINKS)
+========================= */
+.pink-1 { background: #C66F80; color: #fff; }
+.pink-2 { background: #F4C7D0; color: #6b2d4f; }
+.pink-3 { background: #FCEBF1; color: #6b2d4f; }
+
+/* =========================
+   🍵 MATCHA (GREENS)
+========================= */
+.green-1 { background: #4A6644; color: #fff; }
+.green-2 { background: #9FAA74; color: #2f4f2f; }
+.green-3 { background: #D7DAB3; color: #2f4f2f; }
+
 /* =========================
    🌱 DASHBOARD LAYOUT
 ========================= */
@@ -423,3 +439,414 @@ body {
   border-radius: 14px;
   cursor: pointer;
 }
+/* =========================
+   🏷️ TASK META
+========================= */
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-left: auto;
+  gap: 0.5rem;
+}
+
+.category {
+  background: var(--soft-green);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.priority {
+  width: 12px;        
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 0.35rem;
+}
+
+
+.priority.low {
+  background: #9FAA74;
+}
+
+.priority.medium {
+  background: #E6B566;
+}
+
+.priority.high {
+  background: #C66F80;
+}
+/* =========================
+   🗑️ DELETE TASK BUTTON
+========================= */
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.delete-btn:hover {
+  color: var(--dusty-rose);
+}
+.bin-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+.delete-btn:hover .bin-icon {
+  opacity: 1;
+}
+/* =========================
+   🗑️ BIN ICON
+========================= */
+
+.bin-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.delete-btn:hover .bin-icon {
+  opacity: 1;
+}
+/* =========================
+   🔍 TASK FILTERS
+========================= */
+
+.task-filters {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.task-filters select {
+  padding: 0.4rem 0.7rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 0.8rem;
+  background: white;
+}
+
+.task-filters select:focus {
+  outline: none;
+  border-color: var(--matcha);
+}
+/* =========================
+   📅 CALENDAR PAGE
+========================= */
+
+/* 🔝 Calendar Header */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.calendar-title {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.month-nav {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--text-dark);
+}
+
+/* 🗓️ Layout */
+.calendar-layout {
+  display: grid;
+  grid-template-columns: 2.2fr 1.3fr;
+  gap: 2rem;
+}
+
+/* 🗓️ Calendar Grid */
+.calendar-grid {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 24px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.8rem;
+}
+
+/* Day names */
+.day-name {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888;
+  margin-bottom: 0.3rem;
+}
+
+/* Date cards */
+.date-card {
+  height: 80px;
+  border-radius: 18px;
+  background: var(--cream);
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-dark);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Muted dates (prev / next month) */
+.date-card.muted {
+  opacity: 0.35;
+}
+
+/* Today outlined */
+.date-card.today {
+  outline: 2px solid var(--matcha);
+  background: var(--cream);
+}
+
+/* Selected date (later via JS) */
+.date-card.selected {
+  background: var(--soft-green);
+}
+
+/* Hover */
+.date-card:hover {
+  background: var(--soft-green);
+}
+
+/* 🟢 Task dots */
+.date-card .dots {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+
+.date-card .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dot.low {
+  background: #9FAA74;
+}
+
+.dot.medium {
+  background: #E6B566;
+}
+
+.dot.high {
+  background: #C66F80;
+}
+
+/* 🧾 Tasks for Selected Day */
+.calendar-tasks {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 24px;
+}
+
+.tasks-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+  color: var(--text-dark);
+}
+
+/* Reuse task card style */
+.calendar-tasks .task-card {
+  background: var(--cream);
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+}
+/* =========================
+   📅 CALENDAR STATUS STATES
+========================= */
+
+/* Base icon inside date */
+.date-icon {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 45px;      /* 🍓 BIGGER ICON */
+  height: 45px;
+  opacity: 0.95;
+}
+
+/* 🌸 All tasks completed */
+.date-card.completed-day {
+  background: var(--soft-green);
+}
+
+/* 🌿 Tasks pending */
+.date-card.pending-day {
+  background: var(--strawberry);
+}
+/* 🕒 Time range input */
+.time-range {
+  margin-bottom: 1rem;
+}
+
+.time-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.time-inputs input {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.time-separator {
+  color: #999;
+  font-weight: 500;
+}
+
+.hint-text {
+  font-size: 0.75rem;
+  color: #888;
+}
+/* =========================
+   🕘 PLANNER LAYOUT
+========================= */
+
+.planner {
+  display: grid;
+  grid-template-columns: 2.5fr 1.2fr;
+  gap: 2rem;
+}
+
+/* LEFT: Timeline */
+.planner-timeline {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 24px;
+}
+
+.planner-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.time-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed #1e1717;  /* 🌸 dashed separator */
+}
+
+
+.time-label {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.time-slot {
+  min-height: 90px;
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 0.6rem;
+
+  display: flex;              /* 🔑 horizontal stacking */
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  overflow-x: auto;           /* scroll if many blocks */
+}
+
+
+
+/* RIGHT: Anytime Tasks */
+.planner-anytime {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 24px;
+}
+
+/* =========================
+   🌸 PLANNER TASK CARDS
+========================= */
+
+.time-slot {
+  min-height: 90px;
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 0.6rem;
+  display: flex;
+  align-items: flex-start;   /* 🔑 do NOT stretch */
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+
+.planner-task {
+  min-width: 120px;
+  max-width: 160px;
+  height: 100%;
+
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.2;
+
+  display: flex;
+  align-items: center;        /* ✅ vertical center */
+  justify-content: center;    /* ✅ horizontal center */
+
+  text-align: center;         /* ✅ multiline text center */
+
+  white-space: normal;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.planner-task:hover {
+  transform: translateY(-2px);
+}
+
+/* 🌸 Pink – Personal */
+.planner-task.pink {
+  background: #ffd6e8;
+  color: #6b2d4f;
+}
+
+/* 🌱 Green – Work / Study */
+.planner-task.green {
+  background: #dff5ea;
+  color: #245c4a;
+}
+

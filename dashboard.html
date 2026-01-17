@@ -22,8 +22,8 @@
 
             <nav class="nav-links">
                 <a class="active">Dashboard</a>
-                <a>Calendar</a>
-                <a>All Tasks</a>
+                <a href="calendar.html">Calendar</a>
+                <a href="planner.html">Planner</a>
                 <a>Settings</a>
                 <a class="logout">Logout</a>
             </nav>
@@ -43,80 +43,95 @@
             </header>
 
             <!-- 🧠 Dashboard Body -->
-            <section class="dashboard">
+      <section class="dashboard">
 
-                <!-- 📝 Today Tasks -->
-                <div class="tasks-section">
-                    <div class="tasks-header">
-                        <h2>Today’s Tasks</h2>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
-
-                    <div class="task-card">
-                       <label class="custom-checkbox">
-  <input type="checkbox" class="task-checkbox" />
-  <span class="checkmark"></span>
-</label>
-
-                        <span>Finish UI layout 🌿</span>
-                    </div>
-
-                    <div class="task-card">
-                        <label class="custom-checkbox">
-  <input type="checkbox" class="task-checkbox" />
-  <span class="checkmark"></span>
-</label>
-
-                        <span>Plan backend structure 🌸</span>
-                    </div>
-                </div>
-
-                <!-- 🌱 Progress Section -->
-                <div class="progress-section">
-                    <h2>Today’s Growth</h2>
-
-                    <div class="progress-circle" id="progressCircle">
-                        <div class="plant" id="plant">🌱</div>
-                        <span class="percent" id="progressPercent">0%</span>
-                    </div>
-
-                    <p class="progress-text">Complete tasks to help your plant grow</p>
-                </div>
-
-            </section>
-
-        </main>
+  <!-- 📝 Today Tasks -->
+  <div class="tasks-section">
+    <div class="tasks-header">
+      <h2>Today’s Tasks</h2>
+      <button class="add-task-btn">+ Add Task</button>
     </div>
+    <div class="task-filters">
+  <select id="filterCategory">
+    <option value="All">All Categories</option>
+    <option value="General">General</option>
+    <option value="Work">Work</option>
+    <option value="Study">Study</option>
+    <option value="Personal">Personal</option>
+  </select>
+
+  <select id="filterPriority">
+    <option value="All">All Priorities</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+  </select>
+</div>
+
+
+    <!-- JS will inject task cards here -->
+    <div id="taskList"></div>
+  </div>
+
+  <!-- 🌱 Progress Section -->
+  <div class="progress-section">
+    <h2>Today’s Growth</h2>
+
+    <div class="progress-circle" id="progressCircle">
+      <div class="plant" id="plant">🌱</div>
+      <span class="percent" id="progressPercent">0%</span>
+    </div>
+
+    <p class="progress-text">Complete tasks to help your plant grow</p>
+  </div>
+
+</section>
+
 <!-- 🌸 Add Task Modal -->
 <div class="modal-overlay" id="taskModal">
   <div class="modal">
     <h2>Add New Task 🌱</h2>
 
-    <form class="task-form">
-      <input type="text" placeholder="Task title" required />
+    <form class="task-form" id="taskForm">
+  <input type="text" id="taskTitle" placeholder="Task title" required />
 
-      <input type="date" />
+  <input type="date" id="taskDate" />
 
-      <select>
-        <option>General</option>
-        <option>Work</option>
-        <option>Study</option>
-        <option>Personal</option>
-      </select>
+  <select id="taskCategory">
+    <option value="General">General</option>
+    <option value="Work">Work</option>
+    <option value="Study">Study</option>
+    <option value="Personal">Personal</option>
+  </select>
 
-      <select>
-        <option>Low Priority</option>
-        <option>Medium Priority</option>
-        <option>High Priority</option>
-      </select>
-
-      <div class="modal-actions">
-        <button type="button" class="cancel-btn">Cancel</button>
-        <button type="submit" class="save-btn">Add Task</button>
-      </div>
-    </form>
+  <div class="time-range">
+  <label>Time (optional)</label>
+<small class="hint-text">Leave empty for anytime tasks</small>
+  <div class="time-inputs">
+    <input type="time" id="taskStartTime" />
+    <span class="time-separator">–</span>
+    <input type="time" id="taskEndTime" />
   </div>
 </div>
+
+
+  <select id="taskPriority">
+  <option value="low">Low</option>
+  <option value="medium">Medium</option>
+  <option value="high">High</option>
+</select>
+
+
+  <div class="modal-actions">
+    <button type="button" class="cancel-btn">Cancel</button>
+    <button type="submit" class="save-btn">Add Task</button>
+  </div>
+</form>
+  </div>
+</div>
+
+
+<audio id="completeSound" src="complete.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grow.ly — Calendar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- 🌱 Sidebar (same as dashboard) -->
+    <aside class="sidebar">
+      <h2 class="sidebar-logo">
+        <span class="green">Grow</span><span class="pink">.ly</span>
+      </h2>
+
+      <nav class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a class="active">Calendar</a>
+        <a href="planner.html">Planner</a>
+        <a>Settings</a>
+        <a class="logout">Logout</a>
+      </nav>
+    </aside>
+
+    <!-- 🌸 Main Content -->
+    <main class="main-content">
+
+      <!-- 🔝 Calendar Header -->
+      <header class="calendar-header">
+        <button class="month-nav" id="prevMonth">◀</button>
+<h1 class="calendar-title" id="calendarTitle">September 2026</h1>
+<button class="month-nav" id="nextMonth">▶</button>
+
+      </header>
+
+      <!-- 🗓️ Calendar + Task Panel -->
+      <section class="calendar-layout">
+
+        <!-- 🗓️ Calendar Grid -->
+       <div class="calendar-grid" id="calendarGrid">
+
+
+          <!-- Week Days -->
+          <div class="day-name">Sun</div>
+          <div class="day-name">Mon</div>
+          <div class="day-name">Tue</div>
+          <div class="day-name">Wed</div>
+          <div class="day-name">Thu</div>
+          <div class="day-name">Fri</div>
+          <div class="day-name">Sat</div>
+
+          <!-- Dates (placeholders) -->
+          <div class="date-card muted">29</div>
+          <div class="date-card muted">30</div>
+          <div class="date-card">1</div>
+          <div class="date-card">2</div>
+          <div class="date-card">3</div>
+          <div class="date-card">4</div>
+          <div class="date-card">5</div>
+
+          <div class="date-card">6</div>
+          <div class="date-card">7</div>
+          <div class="date-card">8</div>
+          <div class="date-card">9</div>
+          <div class="date-card today">10</div>
+          <div class="date-card">11</div>
+          <div class="date-card">12</div>
+
+          <!-- (more dates later via JS) -->
+
+        </div>
+
+          <!-- 🧾 Tasks for Selected Day -->
+<div class="calendar-tasks">
+
+  <h2 class="tasks-title" id="calendarTasksTitle">Tasks for Today</h2>
+
+  <!-- JS will inject tasks here -->
+  <div id="calendarTaskList"></div>
+
+</div>
+
+
+      </section>
+
+    </main>
+  </div>
+<script src="script.js"></script>
+
+</body>
+</html>

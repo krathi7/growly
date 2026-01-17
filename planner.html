@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Planner | Grow.ly</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- 🌱 Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="green">Grow</span><span class="pink">.ly</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="calendar.html">Calendar</a>
+        <a class="active" href="planner.html">Planner</a>
+        <a>Settings</a>
+        <a class="logout">Logout</a>
+      </nav>
+    </aside>
+
+    <!-- 🌸 Main Content -->
+    <main class="main-content">
+
+      <!-- 🔝 Top bar -->
+      <div class="topbar">
+        <div>
+          <h1 class="welcome">Daily Planner</h1>
+          <p class="subtext">Plan your day gently 🌱</p>
+        </div>
+
+        <div class="profile-circle">K</div>
+      </div>
+
+      <!-- 🕘 Planner Body -->
+      <section class="planner">
+<!-- LEFT: Timeline -->
+<div class="planner-left">
+  <h2 class="planner-title">Today</h2>
+
+  <div class="timeline" id="plannerTimeline">
+    <!-- JS will inject time rows here -->
+  </div>
+</div>
+
+        
+
+        <!-- RIGHT: Anytime Tasks -->
+<div class="planner-anytime">
+  <h2 class="planner-title">Anytime Today 🌸</h2>
+  <div id="anytimeTaskList"></div>
+</div>
+
+      </section>
+
+    </main>
+  </div>
+  <script src="script.js"></script>
+
+</body>
+</html>
