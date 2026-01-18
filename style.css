@@ -907,3 +907,29 @@ body {
   position: relative;
   overflow: visible;
 }
+/* 🌱 Plant image styling */
+#plant {
+  width: 190px;          /* ⬅️ increase size here */
+  height: auto;
+  position: relative;
+  z-index: 2;
+   transform: scale(1.05); 
+  transition: 
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.progress-circle::before {
+  z-index: 1;
+}
+.percent {
+  z-index: 3;
+}
+.percent {
+  position: absolute;
+  bottom: 20px;          /* ⬅️ adjust vertical position */
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  z-index: 3;            /* 🔥 ABOVE white inner circle */
+}

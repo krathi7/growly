@@ -192,12 +192,18 @@ function updateProgress() {
     #eee ${deg}deg
   )`;
 
-  if (percent === 0) plant.textContent = "🌱";
-  else if (percent <= 30) plant.textContent = "🌿";
-  else if (percent <= 60) plant.textContent = "🌿🌿";
-  else if (percent < 100) plant.textContent = "🌼";
-  else plant.textContent = "🌸";
+  // 🌱 PLANT IMAGE LOGIC (1.png → 8.png, no folder)
+  let stage = Math.ceil((percent / 100) * 8);
+
+  // 0% should still show 1.png (soil)
+  stage = Math.max(stage, 1);
+
+  // safety cap
+  stage = Math.min(stage, 8);
+
+  plant.src = `${stage}.png`;
 }
+
 // ===============================
 // 📅 Calendar Logic
 // ===============================
@@ -529,11 +535,32 @@ function renderPlanner() {
     });
 }
 
+// 🌸 Time-based greeting
+function setGreeting() {
+  const greetingEl = document.getElementById("greeting");
+  if (!greetingEl) return;
+
+  const hour = new Date().getHours();
+  let greeting = "";
+
+  if (hour >= 5 && hour < 12) {
+    greeting = "Good Morning 🌸";
+  } else if (hour >= 12 && hour < 17) {
+    greeting = "Good Afternoon ☀️";
+  } else if (hour >= 17 && hour < 21) {
+    greeting = "Good Evening ";
+  } else {
+    greeting = "Good to see you!";
+  }
+
+  greetingEl.textContent = greeting;
+}
 
 // ===============================
 // 🚀 INIT (ONLY ONE — FINAL)
 // ===============================
 loadTasks();
+setGreeting();
 renderTasks();
 renderCalendar();
 renderPlanner();
