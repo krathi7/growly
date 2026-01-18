@@ -452,21 +452,6 @@ function createPlannerTask(task) {
 
   const timeText = task.time ? task.time.replace("-", " – ") : "";
 
-  // 🕒 MULTI-HOUR HEIGHT LOGIC (ADDED)
-  if (task.time) {
-    const [start, end] = task.time.split("-");
-    const [sh, sm] = start.split(":").map(Number);
-    const [eh, em] = end.split(":").map(Number);
-
-    const startMinutes = sh * 60 + sm;
-    const endMinutes = eh * 60 + em;
-
-    const durationHours = Math.max((endMinutes - startMinutes) / 60, 1);
-
-    const hourHeight = 90; // must match .time-slot min-height
-    card.style.height = `${durationHours * hourHeight}px`;
-  }
-
   // ✅ ADD PRIORITY DOT HERE
   card.innerHTML = `
     <div class="planner-task-header">
@@ -478,7 +463,6 @@ function createPlannerTask(task) {
 
   return card;
 }
-
 
 
 
@@ -543,18 +527,6 @@ function renderPlanner() {
       const slot = document.querySelector(`.time-slot[data-hour="${hour}"]`);
       if (slot) slot.appendChild(createPlannerTask(task));
     });
-}
-function getTaskDurationInHours(timeRange) {
-  if (!timeRange) return 1;
-
-  const [start, end] = timeRange.split("-");
-  const [sh, sm] = start.split(":").map(Number);
-  const [eh, em] = end.split(":").map(Number);
-
-  const startMinutes = sh * 60 + sm;
-  const endMinutes = eh * 60 + em;
-
-  return Math.max((endMinutes - startMinutes) / 60, 1);
 }
 
 
