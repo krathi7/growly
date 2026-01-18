@@ -63,7 +63,7 @@ if (addTaskBtn && taskForm) {
   taskForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-   const task = {
+    const task = {
   id: Date.now(),
   title: taskTitle.value,
   date: taskDate.value || today(),
@@ -71,10 +71,9 @@ if (addTaskBtn && taskForm) {
     ? `${taskStartTime.value}-${taskEndTime.value}`
     : null,
   category: taskCategory.value,
-  priority: taskPriority.value, // ✅ ADD HERE
+  priority: taskPriority.value, // ✅ FIX
   completed: false
 };
-
 
 
     tasks.push(task);
@@ -433,7 +432,6 @@ function createPlannerTask(task) {
   const card = document.createElement("div");
   card.className = "planner-task";
 
-  // 🎨 shade pools
   const pinkShades = ["pink-1", "pink-2", "pink-3"];
   const greenShades = ["green-1", "green-2", "green-3"];
 
@@ -447,11 +445,43 @@ function createPlannerTask(task) {
     );
   }
 
-  if (task.completed) card.style.opacity = "0.6";
+  if (task.completed) {
+    card.classList.add("completed");
+    card.style.opacity = "0.6";
+  }
 
-  card.textContent = task.title;
+  const timeText = task.time ? task.time.replace("-", " – ") : "";
+
+  // 🕒 MULTI-HOUR HEIGHT LOGIC (ADDED)
+  if (task.time) {
+    const [start, end] = task.time.split("-");
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+
+    const startMinutes = sh * 60 + sm;
+    const endMinutes = eh * 60 + em;
+
+    const durationHours = Math.max((endMinutes - startMinutes) / 60, 1);
+
+    const hourHeight = 90; // must match .time-slot min-height
+    card.style.height = `${durationHours * hourHeight}px`;
+  }
+
+  // ✅ ADD PRIORITY DOT HERE
+  card.innerHTML = `
+    <div class="planner-task-header">
+      <span class="task-title">${task.title}</span>
+      <span class="priority ${task.priority}"></span>
+    </div>
+    ${timeText ? `<div class="task-time">${timeText}</div>` : ""}
+  `;
+
   return card;
 }
+
+
+
+
 
 
 
@@ -513,6 +543,18 @@ function renderPlanner() {
       const slot = document.querySelector(`.time-slot[data-hour="${hour}"]`);
       if (slot) slot.appendChild(createPlannerTask(task));
     });
+}
+function getTaskDurationInHours(timeRange) {
+  if (!timeRange) return 1;
+
+  const [start, end] = timeRange.split("-");
+  const [sh, sm] = start.split(":").map(Number);
+  const [eh, em] = end.split(":").map(Number);
+
+  const startMinutes = sh * 60 + sm;
+  const endMinutes = eh * 60 + em;
+
+  return Math.max((endMinutes - startMinutes) / 60, 1);
 }
 
 
